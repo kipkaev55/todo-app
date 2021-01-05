@@ -34,6 +34,10 @@ type getAllListsResponse struct {
 	Data []todo.TodoList `json:"data"`
 }
 
+type getAllItemsResponse struct {
+	Data []todo.TodoItem `json:"data"`
+}
+
 func (h *Handler) getAllLists(c *gin.Context) {
 	userId, err := getUserId(c)
 	if err != nil {
