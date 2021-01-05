@@ -54,7 +54,9 @@ func (h *Handler) getAllItems(c *gin.Context) {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
-
+	if len(items) == 0 {
+		items = make([]todo.TodoItem, 0)
+	}
 	c.JSON(http.StatusOK, getAllItemsResponse{
 		Data: items,
 	})

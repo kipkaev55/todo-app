@@ -1,0 +1,24 @@
+version: '3.8'
+
+services:
+  app:
+    build: ./
+    restart: "on-failure"
+    command: ./wait-for-postgres.sh db ./app
+    ports:
+      - ${APP_PORT:-8080}:8080
+    depends_on:
+      - db
+    environment:
+      GIN_MODE: ${GIN_MODE}
+      DB_PASSWORD: ${DB_PASSWORD}
+
+  db:
+    restart: "on-failure"
+    image: postgres:latest
+    volumes:
+    - ./.database/postgres/data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - 5436:5432

@@ -49,7 +49,9 @@ func (h *Handler) getAllLists(c *gin.Context) {
 		newErrorResponse(c, http.StatusInternalServerError, err.Error())
 		return
 	}
-
+	if len(lists) == 0 {
+		lists = make([]todo.TodoList, 0)
+	}
 	c.JSON(http.StatusOK, getAllListsResponse{
 		Data: lists,
 	})

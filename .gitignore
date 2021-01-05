@@ -1,2 +1,4 @@
 .idea
 .env
+.database
+configs/config.yml
