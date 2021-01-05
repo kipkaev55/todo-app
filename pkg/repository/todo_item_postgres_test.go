@@ -317,10 +317,12 @@ func TestTodoItemPostgres_Delete(t *testing.T) {
 }
 
 func TestTodoItemPostgres_Update(t *testing.T) {
-	db, mock, err := sqlmock.Newx()
+	mockDB, mock, err := sqlmock.New()
 	if err != nil {
 		t.Fatalf("an error '%s' was not expected when opening a stub database connection", err)
 	}
+	db := sqlx.NewDb(mockDB, "sqlmock")
+	defer mockDB.Close()
 	defer db.Close()
 
 	r := NewTodoItemPostgres(db)
